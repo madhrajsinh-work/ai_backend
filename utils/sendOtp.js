@@ -11,6 +11,8 @@ const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString()
 
 const sendOtpToWhatsApp = async (toPhone, otp) => {
 
+  console.log(otp)
+
   const to = 'whatsapp:' + toPhone;
   const body = `👋 Hello! Your verification code is: *${otp}*.\n\nPlease enter it to verify your WhatsApp number.`;
 

@@ -41,14 +41,19 @@ exports.askGpt4o = async (req, res) => {
       const sender = await User.findById(senderId);
 
       if (recipient) {
-        // Save message to recipient's chat
+
         let chat = await Chat.findOne({ user: recipient._id });
         if (!chat) {
           chat = new Chat({ user: recipient._id, messages: [] });
         }
 
-        const personalizedMsg = `${sender.username} says: ${messageText}`;
-        chat.messages.push({ sender: 'user', text: personalizedMsg });
+        const personalizedMsg = messageText; 
+        chat.messages.push({
+          sender: 'other_user',
+          text: personalizedMsg, 
+          senderUser: senderId,
+          isAIMediated: true
+        });
         await chat.save();
 
         return res.json({
