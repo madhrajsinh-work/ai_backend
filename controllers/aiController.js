@@ -1,35 +1,3 @@
-// const OpenAI = require('openai');
-
-// const openai = new OpenAI({
-//   baseURL: 'https://models.github.ai/inference',
-//   apiKey: process.env.GITHUB_TOKEN,
-// });
-
-// exports.askGpt4o = async (req, res) => {
-//   const { prompt } = req.body;
-
-//   if (!prompt) return res.status(400).json({ message: 'Prompt is required' });
-
-//   try {
-//     const response = await openai.chat.completions.create({
-//       messages: [
-//         { role: 'system', content: '' },
-//         { role: 'user', content: prompt }
-//       ],
-//       model: 'openai/gpt-4.1',
-//       temperature: 1,
-//       max_tokens: 4096,
-//       top_p: 1
-//     });
-
-//     const answer = response.choices[0].message.content;
-//     res.json({ answer });
-//   } catch (error) {
-//     console.error('GPT-4o Error:', error);
-//     res.status(500).json({ message: 'Failed to get response from GPT-4o' });
-//   }
-// };
-
 const OpenAI = require('openai');
 const User = require('../models/User');
 const Chat = require('../models/Chat');
@@ -46,10 +14,8 @@ exports.askGpt4o = async (req, res) => {
   if (!prompt) return res.status(400).json({ message: 'Prompt is required' });
 
   try {
-    // Regex 1: Hindi/Gujarati format: "username ko 'message' message bhej de"
     const gujaratiRegex = /([\w\d.@+]+|\+91\d{10})\s*ko\s*["']?(.*?)["']?\s*message\s*bhej\s*de/i;
 
-    // Regex 2: English format: Send 'message' message to username
     const englishRegex = /send\s+["']?(.*?)["']?\s*message\s*to\s+([\w\d.@+]+|\+91\d{10})/i;
 
     let recipientQuery, messageText;
